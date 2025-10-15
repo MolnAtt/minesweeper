@@ -8,6 +8,7 @@ h1{
     display: grid;
     grid-template-columns: repeat(15,20px);
     grid-template-rows: repeat(15,20px);
+    justify-content: center;
 }
 
 .container div{
@@ -28,3 +29,4 @@ h1{
     border-bottom-color: #F04040;
     border-right-color: #F04040;
 }
+
