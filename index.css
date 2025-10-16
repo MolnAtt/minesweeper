@@ -12,6 +12,15 @@ h1{
 }
 
 .container div{
+    background-color: #B0B0B0;
+    transition: .2s;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+
+}
+
+.nemkattintott{
     background-color: #A0A0A0;
     border-top-color: #C0C0C0;
     border-left-color: #C0C0C0;
@@ -19,7 +28,6 @@ h1{
     border-right-color: #404040;
     border-width: 3px;
     border-style: solid;
-    transition: .2s;
 }
 
 .container div:hover{

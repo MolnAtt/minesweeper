@@ -52,21 +52,82 @@ function divek_letrehozasa(x,y){
             let div = document.createElement("div");
             div.id = `${i} ${j}`;
             div.onclick = balkatt;
+            div.classList.add('nemkattintott');
             document.querySelector(".container").appendChild(div);
         }
     }
 }
 
-
 function melyikez(div){
-    return (5,6)
+    [sx,sy] = div.id.split(" "); // ["9", "4"]
+    return [parseInt(sx), parseInt(sy)];
 }
 
 
 function balkatt(e){
+    let mezodiv = e.target; // <div id="9 4"></div>
+    console.log(mezodiv);
+
+    // ha rákattintunk, akkor meg szeretném nézni, hogy mi van itt.
+    // 1. kiderítjük az e.targetből, hogy hova kattintottunk : x, y koordináta!
+
+    // mezodiv.id // "9 4"
+    [x, y] = melyikez(mezodiv)
+
+
+    console.log(x);
+    console.log(y);
     
+    // 2. map-ban megnézzük, hogy van-e ott akna, ha igen...
+    console.log(map[x][y]);
+    if(map[x][y]===1){
+        alert('meghaltál');
+        window.location.reload();
+    }
+    // 2.5. map-ban megnézzük, hogy van-e a szomszédban akna... 
+    else{
+        let sz = szasz(x,y);
+        if(sz>0){
+            mezodiv.innerHTML=sz;
+            mezodiv.classList.remove('nemkattintott');
+        }else{
+            // 3. Ha nincs itt és a szomszédban sincs akna, akkor gráfbejárás
+            let ures_mezok = ures_mezoi(x, y) // [[2,3], [2,4], .... ]
+            for (const [x,y] of ures_mezok) {
+                mezodiv.innerHTML=sz;
+                mezodiv.classList.remove('nemkattintott');
+            }
+        }
+    }
 }
 
+
+function ures_mezoi(x,y){
+    let tennivalok = [[x,y]]
+
+
+    while(0<tennivalok.count){
+
+        let tennivalo = tennivalok.pop();
+        
+
+
+    }
+}
+
+
+function szasz(x, y) // szomszédos aknák száma
+{
+    let asz = 0;
+    for (let i = x-1; i <= x+1; i++) {
+        for (let j = y-1; j <= y+1; j++) {
+            if(0<=i && 0<=j && i<15 && j<15){
+                asz += map[i][j];
+            }
+        }
+    }
+    return asz-map[x][y];
+}
 
 function megmutat(x,y){
     // vagy bomba van itt, és game over, vagy számot mutat, vagy kibont
@@ -93,5 +154,5 @@ function gyozelem(aknak_szama){
 
 
 divek_letrehozasa(15,15);
-random_map_generalasa(90);
+let map = random_map_generalasa(40);
 
