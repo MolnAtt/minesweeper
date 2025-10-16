@@ -63,6 +63,9 @@ function melyikez(div){
     return [parseInt(sx), parseInt(sy)];
 }
 
+function ezadiv(x,y){
+    return document.getElementById(`${x} ${y}`);
+}
 
 function balkatt(e){
     let mezodiv = e.target; // <div id="9 4"></div>
@@ -93,9 +96,16 @@ function balkatt(e){
         }else{
             // 3. Ha nincs itt és a szomszédban sincs akna, akkor gráfbejárás
             let ures_mezok = ures_mezoi(x, y) // [[2,3], [2,4], .... ]
-            for (const [x,y] of ures_mezok) {
-                mezodiv.innerHTML=sz;
-                mezodiv.classList.remove('nemkattintott');
+            for (const [ux,uy] of ures_mezok) {
+                let d = ezadiv(ux,uy)
+                d.innerHTML="";
+                d.classList.remove('nemkattintott');
+                for (const [szx,szy] of szomszedai(ux,uy)) {
+                    let d = ezadiv(szx,szy)
+                    let ssz = szasz(szx,szy)
+                    d.innerHTML= ssz ===0?'':ssz;
+                    d.classList.remove('nemkattintott');
+                }
             }
         }
     }
@@ -103,18 +113,46 @@ function balkatt(e){
 
 
 function ures_mezoi(x,y){
+    result = [[x,y]]
     let tennivalok = [[x,y]]
 
+    let feher = 0;
+    let szurke = 1;
+    let fekete = 2;
 
-    while(0<tennivalok.count){
+    szinezes = random_map_generalasa(0);
 
-        let tennivalo = tennivalok.pop();
-        
+    while(0<tennivalok.length){
+        let [tx, ty] = tennivalok.pop();
+        // feldolgozás
 
+        szinezes[tx][ty] = fekete;
 
+        // új szomszédok bevétele a tennivalókba
+
+        for (const [szx,szy] of szomszedai(tx,ty)) {
+            if (szinezes[szx][szy] === feher && szasz(szx,szy)===0){
+                result.push([szx,szy]);
+                tennivalok.push([szx, szy]);
+            }
+            szinezes[szx][szy] = szurke;
+        }
     }
+    return result;
 }
 
+function szomszedai(x,y){
+   let lista = [];
+    for (let i = x-1; i <= x+1; i++) {
+        for (let j = y-1; j <= y+1; j++) {
+            if(0<=i && 0<=j && i<15 && j<15){
+                if(!(i===x && j === y))
+                    lista.push([i,j])
+            }
+        }
+    }
+    return lista;
+}
 
 function szasz(x, y) // szomszédos aknák száma
 {
