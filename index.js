@@ -52,6 +52,8 @@ function divek_letrehozasa(x,y){
             let div = document.createElement("div");
             div.id = `${i} ${j}`;
             div.onclick = balkatt;
+            // itt hagytuk abba
+            div.onjobbklikk?? = jobbkatt;
             div.classList.add('nemkattintott');
             document.querySelector(".container").appendChild(div);
         }
@@ -178,7 +180,15 @@ function kibont(x,y){
 
 function jobbkatt(e){
     // bombát kiált itt. Vagy zászló kerül le, ha tényleg van itt bomba, vagy game over!
-
+    let [x,y] = melyikez(e.target);
+    e.preventDefault();
+    if(m[x][y]!=1){
+        alert("ezt benézted.");
+        window.location.reload();
+    }
+    else{
+        e.target.innerHTML='⛳';
+    }
 }
 
 function gyozelem(aknak_szama){
