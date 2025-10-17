@@ -53,12 +53,14 @@ function divek_letrehozasa(x,y){
             div.id = `${i} ${j}`;
             div.onclick = balkatt;
             // itt hagytuk abba
-            div.onjobbklikk?? = jobbkatt;
+            div.oncontextmenu = jobbkatt;
             div.classList.add('nemkattintott');
             document.querySelector(".container").appendChild(div);
         }
     }
 }
+
+
 
 function melyikez(div){
     [sx,sy] = div.id.split(" "); // ["9", "4"]
@@ -182,7 +184,7 @@ function jobbkatt(e){
     // bombát kiált itt. Vagy zászló kerül le, ha tényleg van itt bomba, vagy game over!
     let [x,y] = melyikez(e.target);
     e.preventDefault();
-    if(m[x][y]!=1){
+    if(map[x][y]!=1){
         alert("ezt benézted.");
         window.location.reload();
     }
